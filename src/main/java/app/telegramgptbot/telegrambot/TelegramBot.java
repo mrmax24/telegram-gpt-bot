@@ -1,5 +1,7 @@
 package app.telegramgptbot.telegrambot;
 
+import app.telegramgptbot.adminpanel.model.ChatLog;
+import app.telegramgptbot.adminpanel.service.ChatLogService;
 import app.telegramgptbot.telegrambot.config.TelegramBotConfig;
 import app.telegramgptbot.telegrambot.service.ChatGptService;
 import org.springframework.stereotype.Component;
@@ -14,33 +16,39 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 public class TelegramBot extends TelegramLongPollingBot {
     private final TelegramBotConfig telegramBotConfig;
     private final ChatGptService chatGptService;
+    private final ChatLogService chatLogService;
 
-    public TelegramBot(TelegramBotConfig telegramBotConfig, ChatGptService chatGptService) {
+
+    public TelegramBot(TelegramBotConfig telegramBotConfig,
+                       ChatGptService chatGptService,
+                       ChatLogService chatLogService) {
         this.telegramBotConfig = telegramBotConfig;
         this.chatGptService = chatGptService;
+        this.chatLogService = chatLogService;
     }
 
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
-            String chatGptResponse;
             String userMessage = update.getMessage().getText();
             Long chatId = update.getMessage().getChatId();
 
             sendChatAction(chatId, ActionType.TYPING);
             try {
-                chatGptResponse = chatGptService.getChatGptResponse(userMessage);
+                String chatGptResponse = chatGptService.getChatGptResponse(userMessage);
+
+                chatLogService.add(new ChatLog(chatId, userMessage, chatGptResponse));
+
+                switch (userMessage) {
+                    case "/start":
+                        startCommandReceived(chatId, update.getMessage().getChat().getFirstName());
+                        break;
+                    default:
+                        sendMessage(update.getMessage().getChatId(), chatGptResponse);
+                        break;
+                }
             } catch (Exception e) {
                 throw new RuntimeException(e);
-            }
-
-            switch (userMessage) {
-                case "/start":
-                    startCommandReceived(chatId, update.getMessage().getChat().getFirstName());
-                    break;
-                default:
-                    sendMessage(update.getMessage().getChatId(), chatGptResponse);
-                    break;
             }
         }
     }
