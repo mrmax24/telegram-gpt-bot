@@ -14,8 +14,8 @@ public class ChatLogDaoImpl extends AbstractDao<ChatLog> implements ChatLogDao {
     }
 
     @Override
-    public Optional<ChatLog> getByChatId(Long id) {
-        return super.getByChatId(id);
+    public Optional<ChatLog> get(Long id) {
+        return super.get(id);
     }
 
     @Override

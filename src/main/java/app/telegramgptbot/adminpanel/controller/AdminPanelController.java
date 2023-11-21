@@ -1,10 +1,12 @@
 package app.telegramgptbot.adminpanel.controller;
 
+import app.telegramgptbot.adminpanel.dto.request.AdminMessageRequestDto;
 import app.telegramgptbot.adminpanel.dto.response.ChatLogResponseDTO;
 import app.telegramgptbot.adminpanel.model.ChatLog;
 import app.telegramgptbot.adminpanel.service.ChatLogService;
+import app.telegramgptbot.adminpanel.service.mapper.RequestDtoMapper;
 import app.telegramgptbot.adminpanel.service.mapper.ResponseDtoMapper;
-import org.springframework.http.ResponseEntity;
+import app.telegramgptbot.telegrambot.TelegramBot;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,12 +15,18 @@ import java.util.List;
 @RequestMapping("/admin-panel")
 public class AdminPanelController {
     private final ChatLogService chatLogService;
+    private final TelegramBot telegramBot;
     private final ResponseDtoMapper<ChatLogResponseDTO, ChatLog> chatLogResponseDtoMapper;
+    private final RequestDtoMapper<AdminMessageRequestDto, ChatLog> adminMessageRequestDtoMapper;
 
-    public AdminPanelController(ChatLogService chatLogService, ResponseDtoMapper
-            <ChatLogResponseDTO, ChatLog> responseDtoMapper) {
+
+    public AdminPanelController(ChatLogService chatLogService, TelegramBot telegramBot, ResponseDtoMapper
+            <ChatLogResponseDTO, ChatLog> responseDtoMapper,
+                                RequestDtoMapper<AdminMessageRequestDto, ChatLog> adminMessageRequestDtoMapper) {
         this.chatLogService = chatLogService;
+        this.telegramBot = telegramBot;
         this.chatLogResponseDtoMapper = responseDtoMapper;
+        this.adminMessageRequestDtoMapper = adminMessageRequestDtoMapper;
     }
 
     @GetMapping
@@ -28,10 +36,15 @@ public class AdminPanelController {
                     .toList();
     }
 
-    @PostMapping("/send-message/{chatId}")
-    public void respondToUser(@PathVariable Long chatId, String message) {
-        ChatLog chatLog = chatLogService.getByChatId(chatId);
-        chatLog.setAdminResponse(message);
+    @PostMapping("/send-message/{id}")
+    public ChatLogResponseDTO respondToUser(@PathVariable Long id,
+                                            @RequestBody AdminMessageRequestDto requestDto) {
+        ChatLog chatLog = chatLogService.get(id);
+        ChatLog chatLogModelWIthResponse = adminMessageRequestDtoMapper.mapToModel(requestDto);
+        chatLog.setAdminResponse(chatLogModelWIthResponse.getAdminResponse());
         chatLogService.update(chatLog);
+        Long userChatId = chatLog.getChatId();
+        telegramBot.sendMessage(userChatId, chatLog.getAdminResponse());
+        return chatLogResponseDtoMapper.mapToDto(chatLog);
     }
 }

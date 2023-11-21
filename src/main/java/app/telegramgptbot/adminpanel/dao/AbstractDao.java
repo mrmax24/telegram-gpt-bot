@@ -39,7 +39,7 @@ public abstract class AbstractDao<T> {
         }
     }
 
-    public Optional<T> getByChatId(Long id) {
+    public Optional<T> get(Long id) {
         try (Session session = factory.openSession()) {
             return Optional.ofNullable(session.get(clazz, id));
         } catch (Exception e) {

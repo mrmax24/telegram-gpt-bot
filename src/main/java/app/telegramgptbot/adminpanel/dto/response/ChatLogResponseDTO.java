@@ -6,5 +6,6 @@ import lombok.Data;
 public class ChatLogResponseDTO {
     private Long chatId;
     private String userMessage;
-    private String response;
+    private String chatResponse;
+    private String adminResponse;
 }

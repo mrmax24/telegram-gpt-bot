@@ -10,7 +10,7 @@ public interface ChatLogService {
 
     List<ChatLog> getAll();
 
-    ChatLog getByChatId(Long chatId);
+    ChatLog get(Long id);
 
     List<ChatLog> findByChatId(Long chatId);
 

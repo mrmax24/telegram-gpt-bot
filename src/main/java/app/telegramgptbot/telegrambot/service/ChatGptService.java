@@ -1,5 +1,6 @@
 package app.telegramgptbot.telegrambot.service;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
@@ -57,11 +58,18 @@ public class ChatGptService {
     private String extractContentFromResponse(String response) {
         try {
             JSONObject responseObject = new JSONObject(response);
-            String content = responseObject.getJSONArray("choices")
-                    .getJSONObject(0)
-                    .getJSONObject("message")
-                    .getString("content");
-            return content;
+            JSONArray choices = responseObject.getJSONArray("choices");
+
+            if (choices.length() > 0) {
+                JSONObject firstChoice = choices.getJSONObject(0);
+
+                // Перевірка, чи є ключ "message" та чи є у нього ключ "content"
+                if (firstChoice.has("message") && firstChoice.getJSONObject("message").has("content")) {
+                    return firstChoice.getJSONObject("message").getString("content");
+                }
+            }
+
+            throw new RuntimeException("Invalid JSON response structure: missing adminResponse");
         } catch (JSONException jsonException) {
             throw new RuntimeException("Error processing JSON response", jsonException);
         } catch (Exception e) {

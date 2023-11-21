@@ -25,9 +25,9 @@ public class ChatLogServiceImpl implements ChatLogService {
     }
 
     @Override
-    public ChatLog getByChatId(Long chatId) {
-        return chatLogDao.getByChatId(chatId).orElseThrow(
-                () -> new RuntimeException("Chat with id " + chatId + " not found"));
+    public ChatLog get(Long id) {
+        return chatLogDao.get(id).orElseThrow(
+                () -> new RuntimeException("Chat with id " + id + " not found"));
     }
 
     @Override

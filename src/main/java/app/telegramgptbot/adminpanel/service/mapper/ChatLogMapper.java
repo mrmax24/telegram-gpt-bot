@@ -11,7 +11,8 @@ public class ChatLogMapper implements ResponseDtoMapper<ChatLogResponseDTO, Chat
         ChatLogResponseDTO responseDTO = new ChatLogResponseDTO();
         responseDTO.setChatId(chatLog.getChatId());
         responseDTO.setUserMessage(chatLog.getUserMessage());
-        responseDTO.setResponse(chatLog.getChatResponse());
+        responseDTO.setChatResponse(chatLog.getChatResponse());
+        responseDTO.setAdminResponse(chatLog.getAdminResponse());
         return responseDTO;
     }
 }

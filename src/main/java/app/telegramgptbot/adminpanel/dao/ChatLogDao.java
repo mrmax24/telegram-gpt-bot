@@ -10,7 +10,7 @@ public interface ChatLogDao {
 
     List<ChatLog> getAll();
 
-    Optional<ChatLog> getByChatId(Long chatId);
+    Optional<ChatLog> get(Long id);
 
     List<ChatLog> findByChatId(Long chatId);
 
