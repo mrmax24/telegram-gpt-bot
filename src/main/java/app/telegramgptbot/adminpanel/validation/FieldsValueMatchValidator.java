@@ -1,4 +1,4 @@
-package app.telegramgptbot.adminpanel.lib;
+package app.telegramgptbot.adminpanel.validation;
 
 import java.util.Objects;
 import javax.validation.ConstraintValidator;

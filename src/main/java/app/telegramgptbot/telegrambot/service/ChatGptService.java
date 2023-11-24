@@ -63,12 +63,11 @@ public class ChatGptService {
             if (choices.length() > 0) {
                 JSONObject firstChoice = choices.getJSONObject(0);
 
-                // Перевірка, чи є ключ "message" та чи є у нього ключ "content"
-                if (firstChoice.has("message") && firstChoice.getJSONObject("message").has("content")) {
+                if (firstChoice.has("message") && firstChoice
+                        .getJSONObject("message").has("content")) {
                     return firstChoice.getJSONObject("message").getString("content");
                 }
             }
-
             throw new RuntimeException("Invalid JSON response structure: missing adminResponse");
         } catch (JSONException jsonException) {
             throw new RuntimeException("Error processing JSON response", jsonException);

@@ -1,5 +1,7 @@
-package app.telegramgptbot.adminpanel.dao;
+package app.telegramgptbot.adminpanel.dao.impl;
 
+import app.telegramgptbot.adminpanel.dao.AbstractDao;
+import app.telegramgptbot.adminpanel.dao.UserDao;
 import app.telegramgptbot.adminpanel.exception.DataProcessingException;
 import app.telegramgptbot.adminpanel.model.User;
 import org.hibernate.Session;

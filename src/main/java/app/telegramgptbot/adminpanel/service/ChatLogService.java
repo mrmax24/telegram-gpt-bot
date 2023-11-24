@@ -3,7 +3,6 @@ package app.telegramgptbot.adminpanel.service;
 import app.telegramgptbot.adminpanel.model.ChatLog;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ChatLogService {
     ChatLog add(ChatLog chatLog);
@@ -12,7 +11,9 @@ public interface ChatLogService {
 
     ChatLog get(Long id);
 
-    List<ChatLog> findByChatId(Long chatId);
+    List<Object[]> findMostRecentChats();
+
+    List<Object[]> findByChatId(Long chatId);
 
     ChatLog update(ChatLog chatLog);
 }

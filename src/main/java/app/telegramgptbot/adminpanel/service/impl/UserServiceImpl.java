@@ -1,7 +1,8 @@
-package app.telegramgptbot.adminpanel.service;
+package app.telegramgptbot.adminpanel.service.impl;
 
 import app.telegramgptbot.adminpanel.dao.UserDao;
 import app.telegramgptbot.adminpanel.model.User;
+import app.telegramgptbot.adminpanel.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

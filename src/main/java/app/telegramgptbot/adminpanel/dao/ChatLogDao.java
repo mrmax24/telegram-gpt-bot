@@ -12,7 +12,9 @@ public interface ChatLogDao {
 
     Optional<ChatLog> get(Long id);
 
-    List<ChatLog> findByChatId(Long chatId);
+    List<Object[]> findMostRecentChats();
+
+    List<Object[]> findByChatId(Long chatId);
 
     ChatLog update(ChatLog chatLog);
 }

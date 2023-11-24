@@ -1,4 +1,4 @@
-package app.telegramgptbot.adminpanel.lib;
+package app.telegramgptbot.adminpanel.validation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

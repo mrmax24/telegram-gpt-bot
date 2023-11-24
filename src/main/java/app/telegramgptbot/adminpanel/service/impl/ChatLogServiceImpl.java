@@ -1,7 +1,8 @@
-package app.telegramgptbot.adminpanel.service;
+package app.telegramgptbot.adminpanel.service.impl;
 
 import app.telegramgptbot.adminpanel.dao.ChatLogDao;
 import app.telegramgptbot.adminpanel.model.ChatLog;
+import app.telegramgptbot.adminpanel.service.ChatLogService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,7 +32,12 @@ public class ChatLogServiceImpl implements ChatLogService {
     }
 
     @Override
-    public List<ChatLog> findByChatId(Long chatId) {
+    public List<Object[]> findMostRecentChats() {
+       return chatLogDao.findMostRecentChats();
+    }
+
+    @Override
+    public List<Object[]> findByChatId(Long chatId) {
         return chatLogDao.findByChatId(chatId);
     }
 
