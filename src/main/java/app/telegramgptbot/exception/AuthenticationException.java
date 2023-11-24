@@ -1,4 +1,4 @@
-package app.telegramgptbot.adminpanel.exception;
+package app.telegramgptbot.exception;
 
 public class AuthenticationException extends RuntimeException {
     public AuthenticationException(String message) {

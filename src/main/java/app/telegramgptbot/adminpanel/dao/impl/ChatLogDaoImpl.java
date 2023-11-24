@@ -2,7 +2,7 @@ package app.telegramgptbot.adminpanel.dao.impl;
 
 import app.telegramgptbot.adminpanel.dao.AbstractDao;
 import app.telegramgptbot.adminpanel.dao.ChatLogDao;
-import app.telegramgptbot.adminpanel.exception.DataProcessingException;
+import app.telegramgptbot.exception.DataProcessingException;
 import app.telegramgptbot.adminpanel.model.ChatLog;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,7 +18,7 @@ public class ChatLogDaoImpl extends AbstractDao<ChatLog> implements ChatLogDao {
     }
 
     @Override
-    public List<Object[]> findMostRecentChats() {
+    public List<Object[]> findAllChats() {
         try (Session session = factory.openSession()) {
             String hql = "SELECT c.chatId, c.tgUsername, c.userMessage, "
                     + "(SELECT COUNT(c1.userMessage) FROM ChatLog c1 "
@@ -39,7 +39,8 @@ public class ChatLogDaoImpl extends AbstractDao<ChatLog> implements ChatLogDao {
             Query<Object[]> query = session.createQuery(hql, Object[].class);
             return query.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Error retrieving chat logs summary", e);
+            throw new DataProcessingException("Error retrieving chat logs summary. "
+                    + "Reason: + " + e.getMessage());
         }
     }
 
@@ -56,7 +57,7 @@ public class ChatLogDaoImpl extends AbstractDao<ChatLog> implements ChatLogDao {
         return query.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Error retrieving chat logs "
-                    + "by chat id " + chatId, e);
+                    + "by chat id " + chatId + " Reason: " + e.getMessage());
         }
     }
 }

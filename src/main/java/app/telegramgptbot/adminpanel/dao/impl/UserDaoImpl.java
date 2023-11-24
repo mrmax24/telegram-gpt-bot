@@ -2,7 +2,7 @@ package app.telegramgptbot.adminpanel.dao.impl;
 
 import app.telegramgptbot.adminpanel.dao.AbstractDao;
 import app.telegramgptbot.adminpanel.dao.UserDao;
-import app.telegramgptbot.adminpanel.exception.DataProcessingException;
+import app.telegramgptbot.exception.DataProcessingException;
 import app.telegramgptbot.adminpanel.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -27,7 +27,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             return query.uniqueResultOptional();
         } catch (Exception e) {
             throw new DataProcessingException("User with email "
-                    + email + " not found", e);
+                    + email + " not found. Reason: " + e.getMessage());
         }
     }
 }

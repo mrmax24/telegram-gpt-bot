@@ -3,6 +3,7 @@ package app.telegramgptbot.adminpanel.service.impl;
 import app.telegramgptbot.adminpanel.dao.UserDao;
 import app.telegramgptbot.adminpanel.model.User;
 import app.telegramgptbot.adminpanel.service.UserService;
+import app.telegramgptbot.exception.DataProcessingException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User get(Long id) {
         return userDao.get(id).orElseThrow(
-                () -> new RuntimeException("User with id " + id + " not found"));
+                () -> new DataProcessingException("User with id " + id + " not found"));
     }
 
     @Override

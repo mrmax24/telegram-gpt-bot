@@ -3,8 +3,13 @@ package app.telegramgptbot.adminpanel.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -34,20 +39,21 @@ public class ChatLog {
     private String adminResponse;
 
     @Column(name = "user_message_time")
-    private Timestamp userMessageTime;
+    private LocalDateTime  userMessageTime;
 
     @Column(name = "chat_message_time")
-    private Timestamp chatResponseTime;
+    private LocalDateTime  chatResponseTime;
 
     @Column(name = "admin_message_time")
-    private Timestamp adminResponseTime;
+    private LocalDateTime adminResponseTime;
 
 
     public ChatLog() {
     }
 
-    public ChatLog(Long chatId, String tgUsername, String fullUsername, String userMessage, String chatResponse,
-                   Timestamp userMessageTime, Timestamp chatResponseTime) {
+    public ChatLog(Long chatId, String tgUsername, String fullUsername,
+                   String userMessage, String chatResponse,
+                   LocalDateTime userMessageTime, LocalDateTime chatResponseTime) {
         this.chatId = chatId;
         this.tgUsername = tgUsername;
         this.fullUsername = fullUsername;

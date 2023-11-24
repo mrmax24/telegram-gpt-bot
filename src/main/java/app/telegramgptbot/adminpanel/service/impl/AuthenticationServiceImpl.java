@@ -1,6 +1,6 @@
 package app.telegramgptbot.adminpanel.service.impl;
 
-import app.telegramgptbot.adminpanel.exception.AuthenticationException;
+import app.telegramgptbot.exception.AuthenticationException;
 import app.telegramgptbot.adminpanel.model.User;
 import app.telegramgptbot.adminpanel.service.AuthenticationService;
 import app.telegramgptbot.adminpanel.service.UserService;

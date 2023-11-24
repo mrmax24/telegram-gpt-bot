@@ -3,6 +3,7 @@ package app.telegramgptbot.adminpanel.service.impl;
 import app.telegramgptbot.adminpanel.dao.ChatLogDao;
 import app.telegramgptbot.adminpanel.model.ChatLog;
 import app.telegramgptbot.adminpanel.service.ChatLogService;
+import app.telegramgptbot.exception.DataProcessingException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,19 +22,14 @@ public class ChatLogServiceImpl implements ChatLogService {
     }
 
     @Override
-    public List<ChatLog> getAll() {
-        return chatLogDao.getAll();
-    }
-
-    @Override
     public ChatLog get(Long id) {
         return chatLogDao.get(id).orElseThrow(
-                () -> new RuntimeException("Chat with id " + id + " not found"));
+                () -> new DataProcessingException("Chat with id " + id + " not found"));
     }
 
     @Override
-    public List<Object[]> findMostRecentChats() {
-       return chatLogDao.findMostRecentChats();
+    public List<Object[]> findAllChats() {
+       return chatLogDao.findAllChats();
     }
 
     @Override

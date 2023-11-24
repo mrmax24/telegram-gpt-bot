@@ -8,11 +8,9 @@ import java.util.Optional;
 public interface ChatLogDao {
     ChatLog add(ChatLog chatLog);
 
-    List<ChatLog> getAll();
-
     Optional<ChatLog> get(Long id);
 
-    List<Object[]> findMostRecentChats();
+    List<Object[]> findAllChats();
 
     List<Object[]> findByChatId(Long chatId);
 

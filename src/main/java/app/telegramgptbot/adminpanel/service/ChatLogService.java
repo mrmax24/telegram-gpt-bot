@@ -7,11 +7,9 @@ import java.util.List;
 public interface ChatLogService {
     ChatLog add(ChatLog chatLog);
 
-    List<ChatLog> getAll();
-
     ChatLog get(Long id);
 
-    List<Object[]> findMostRecentChats();
+    List<Object[]> findAllChats();
 
     List<Object[]> findByChatId(Long chatId);
 

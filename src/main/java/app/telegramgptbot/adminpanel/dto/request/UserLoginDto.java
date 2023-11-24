@@ -10,5 +10,4 @@ public class UserLoginDto {
     private String email;
     @NotBlank(message = "Password can't be empty!")
     private String password;
-
 }

@@ -2,12 +2,10 @@ package app.telegramgptbot.adminpanel.controller;
 
 import app.telegramgptbot.adminpanel.dto.request.UserLoginDto;
 import app.telegramgptbot.adminpanel.dto.request.UserRequestDto;
-import app.telegramgptbot.adminpanel.dto.response.UserResponseDto;
-import app.telegramgptbot.adminpanel.exception.AuthenticationException;
+import app.telegramgptbot.exception.AuthenticationException;
 import app.telegramgptbot.adminpanel.model.User;
 import app.telegramgptbot.adminpanel.security.jwt.JwtTokenProvider;
 import app.telegramgptbot.adminpanel.service.AuthenticationService;
-import app.telegramgptbot.adminpanel.service.mapper.ResponseDtoMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
