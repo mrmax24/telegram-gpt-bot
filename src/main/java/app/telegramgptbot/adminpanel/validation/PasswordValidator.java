@@ -1,14 +1,14 @@
 package app.telegramgptbot.adminpanel.validation;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
-public class PasswordValidator implements ConstraintValidator<ValidPassword, String> {
+public class PasswordValidator implements ConstraintValidator<Password, String> {
     private static final String PASSWORD_VALIDATION_REGEX =
             "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&_])[A-Za-z\\d@$!%*?&_]+$";
 
     @Override
-    public void initialize(ValidPassword constraintAnnotation) {
+    public void initialize(Password constraintAnnotation) {
     }
 
     @Override

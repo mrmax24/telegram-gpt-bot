@@ -1,17 +1,18 @@
 package app.telegramgptbot.adminpanel.service;
 
-import app.telegramgptbot.adminpanel.model.ChatLog;
+import app.telegramgptbot.adminpanel.dto.chatlog.ChatLogByIdDto;
+import app.telegramgptbot.adminpanel.dto.chatlog.ChatLogListDto;
+import app.telegramgptbot.adminpanel.dto.chatlog.ChatLogRequestDto;
+import app.telegramgptbot.adminpanel.dto.chatlog.ChatLogResponseDto;
 
 import java.util.List;
 
 public interface ChatLogService {
-    ChatLog add(ChatLog chatLog);
+    ChatLogResponseDto save(ChatLogRequestDto chatLogRequestDto);
 
-    ChatLog get(Long id);
+    ChatLogResponseDto getChatLogById(Long id);
 
-    List<Object[]> findAllChats();
+    List<ChatLogListDto> getChatList();
 
-    List<Object[]> findByChatId(Long chatId);
-
-    ChatLog update(ChatLog chatLog);
+    List<ChatLogByIdDto> getLogsByChatId(Long chatId);
 }

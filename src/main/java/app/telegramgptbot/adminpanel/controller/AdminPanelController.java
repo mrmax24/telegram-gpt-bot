@@ -1,61 +1,42 @@
 package app.telegramgptbot.adminpanel.controller;
 
-import app.telegramgptbot.adminpanel.dto.request.AdminMessageRequestDto;
-import app.telegramgptbot.adminpanel.dto.response.ChatLogResponseDTO;
-import app.telegramgptbot.adminpanel.model.ChatLog;
+import app.telegramgptbot.adminpanel.dto.admin.AdminMessageResponseDto;
+import app.telegramgptbot.adminpanel.dto.chatlog.ChatLogByIdDto;
+import app.telegramgptbot.adminpanel.dto.chatlog.ChatLogListDto;
+import app.telegramgptbot.adminpanel.dto.admin.AdminMessageRequestDto;
+import app.telegramgptbot.adminpanel.dto.chatlog.ChatLogResponseDto;
+import app.telegramgptbot.adminpanel.mapper.AdminMessageMapper;
+import app.telegramgptbot.adminpanel.service.AdminResponseHandler;
 import app.telegramgptbot.adminpanel.service.ChatLogService;
-import app.telegramgptbot.adminpanel.service.mapper.RequestDtoMapper;
-import app.telegramgptbot.adminpanel.service.mapper.ResponseDtoMapper;
-import app.telegramgptbot.telegrambot.TelegramBot;
-import org.springframework.http.ResponseEntity;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin-panel")
+@RequiredArgsConstructor
+@RequestMapping("/")
 public class AdminPanelController {
     private final ChatLogService chatLogService;
-    private final TelegramBot telegramBot;
-    private final ResponseDtoMapper<ChatLogResponseDTO, ChatLog> chatLogResponseDtoMapper;
-    private final RequestDtoMapper<AdminMessageRequestDto, ChatLog> adminMessageRequestDtoMapper;
+    private final AdminMessageMapper adminMessageMapper;
+    private final AdminResponseHandler adminResponseHandler;
 
-
-    public AdminPanelController(ChatLogService chatLogService, TelegramBot telegramBot,
-                                ResponseDtoMapper<ChatLogResponseDTO, ChatLog> responseDtoMapper,
-                                RequestDtoMapper<AdminMessageRequestDto,
-                                        ChatLog> adminMessageRequestDtoMapper) {
-        this.chatLogService = chatLogService;
-        this.telegramBot = telegramBot;
-        this.chatLogResponseDtoMapper = responseDtoMapper;
-        this.adminMessageRequestDtoMapper = adminMessageRequestDtoMapper;
+    @GetMapping
+    public List<ChatLogListDto> getChatList() {
+        return chatLogService.getChatList();
     }
 
-    @GetMapping("/all-chats")
-    public ResponseEntity<List<Object[]>> getMostRecentChats() {
-        List<Object[]> mostRecentChats = chatLogService.findAllChats();
-        return ResponseEntity.ok(mostRecentChats);
+    @GetMapping("/{id}")
+    public List<ChatLogByIdDto> getLogsByChatId(@PathVariable Long id) {
+        return chatLogService.getLogsByChatId(id);
     }
 
-    @GetMapping("/logs-by-chat/{chatId}")
-    public ResponseEntity<List<Object[]>> getLogsByChatId(@PathVariable Long chatId) {
-        List<Object[]> logsByChatId = chatLogService.findByChatId(chatId);
-        return ResponseEntity.ok(logsByChatId);
-    }
-
-    @PostMapping("/send-message/{id}")
-    public ChatLogResponseDTO respondToUser(@PathVariable Long id,
-                                            @RequestBody AdminMessageRequestDto requestDto) {
-        ChatLog chatLog = chatLogService.get(id);
-        String adminResponse = adminMessageRequestDtoMapper
-                .mapToModel(requestDto).getAdminResponse();
-        chatLog.setAdminResponse(adminResponse);
-        Long userChatId = chatLog.getChatId();
-        telegramBot.sendMessage(userChatId, adminResponse);
-        long adminResponseTime = System.currentTimeMillis();
-        chatLog.setAdminResponseTime(new Timestamp(adminResponseTime).toLocalDateTime());
-        chatLogService.update(chatLog);
-        return chatLogResponseDtoMapper.mapToDto(chatLog);
+    @PostMapping("/reply/{id}")
+    public AdminMessageResponseDto respondToUser(@PathVariable Long id,
+                                                 @Valid @RequestBody AdminMessageRequestDto requestDto) {
+        ChatLogResponseDto chatLogResponseDto = chatLogService.getChatLogById(id);
+        String adminResponse = adminMessageMapper.mapToModel(requestDto).getAdminResponse();
+        return adminResponseHandler.handleAdminResponse(chatLogResponseDto, adminResponse);
     }
 }
