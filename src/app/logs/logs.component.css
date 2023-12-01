@@ -1,0 +1,135 @@
+div {
+  padding: 20px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #f8f2f2;
+  min-height: 100vh;
+
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+th, td {
+  border: 1px solid #989494;
+  padding: 8px;
+  text-align: left;
+}
+
+.chatgpt-responses-column {
+  width: 400px;
+}
+
+.admin-responses-column {
+  width: 200px;
+}
+
+.admin-response-time-column {
+  width: 50px;
+}
+
+.message-response-time-column {
+  width: 50px;
+}
+
+.chat-response-time-column {
+  width: 70px;
+}
+
+.message-column {
+  width: 70px;
+}
+
+.name-column {
+  width: 80px;
+}
+
+.send-column {
+  width: 50px;
+}
+
+th {
+  background-color: #aebcd9;
+  text-align: center;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #413e3e;
+}
+
+.site-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
+
+.user-info {
+  text-align: right;
+}
+
+.header-container span {
+  color: white;
+}
+
+.header-container h1 {
+  font-size: 24px;
+  color: #ffffff;
+  text-align: left;
+}
+
+.logout-button {
+  color: #000000;
+  background-color: #f8f2f2;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #4f94d9;
+}
+
+div > span, div > button {
+  margin-right: 10px;
+}
+
+.chat-id-link {
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.message-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 30px;
+  border: 2px solid #333;
+  border-radius: 10px;
+
+  width: 400px;
+  height: 300px;
+
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.message-popup textarea {
+  width: 100%;
+  height: 70%;
+  margin-bottom: 15px;
+}

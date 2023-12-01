@@ -1,0 +1,53 @@
+<html>
+<body>
+<div class="header-container">
+  <div class="site-name">TGBot Admin panel</div>
+  <div class="user-info" style="text-align: right;">
+    <span>{{ admin?.email }}</span>
+    <button (click)="logout()" class="logout-button">Logout</button>
+  </div>
+</div>
+
+<div class="table-container" style="margin-top: 20px;">
+  <table>
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Message time</th>
+      <th>Message</th>
+      <th>ChatGPT response time</th>
+      <th>ChatGPT Responses</th>
+      <th>Admin Response time</th>
+      <th>Admin Responses</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let log of chatLogs">
+      <td class="name-column">{{ log.fullUsername ? log.fullUsername : '...' }}</td>
+      <td class="message-response-time-column">{{ log.userMessageTime | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+      <td class="message-column">{{ log.userMessage }}</td>
+      <td class="chat-response-time-column">{{ log.chatResponseTime | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+      <td class="chatgpt-responses-column">{{ log.chatResponse }}</td>
+      <td class="admin-response-time-column">
+        <ng-container *ngIf="log.adminResponseTime; else noData">
+          {{ log.adminResponseTime | date: 'yyyy-MM-dd HH:mm:ss' }}
+        </ng-container>
+        <ng-template #noData>...</ng-template>
+      </td>
+      <td class="admin-responses-column">{{ log.adminResponse ? log.adminResponse : '...' }}</td>
+      <td class="send-column">
+        <button (click)="openPopup(log.id)">Send message</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="isPopupOpen" class="message-popup">
+  <textarea [(ngModel)]="message" placeholder="Enter your message"></textarea>
+  <button (click)="sendMessage(message)">Send</button>
+  <button (click)="closePopup()">Close</button>
+</div>
+</body>
+</html>
