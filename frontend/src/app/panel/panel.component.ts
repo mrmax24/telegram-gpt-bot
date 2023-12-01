@@ -50,7 +50,7 @@ export class PanelComponent implements OnInit {
   loadChatLogs(): void {
     const headers = this.authService.getAuthorizationHeader();
     const serverUrl = environment.serverUrl
-    
+
     this.http.get<ChatLogListDto[]>(`${serverUrl}`, { headers })
       .subscribe(
       (data: ChatLogListDto[]) => {
@@ -66,7 +66,7 @@ export class PanelComponent implements OnInit {
   getAdmin() {
     const headers = this.authService.getAuthorizationHeader()
     const serverUrl = environment.serverUrl
-    
+
     this.http.get<AdminResponseDto>(`${serverUrl}/admin`, { headers })
       .subscribe(
         (data: AdminResponseDto) => {

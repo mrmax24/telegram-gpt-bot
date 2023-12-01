@@ -82,13 +82,13 @@ export class LogsComponent implements OnInit {
     const chatId = this.getChatId();
     const serverUrl = environment.serverUrl
     const headers = this.authService.getAuthorizationHeader();
-    
+
     this.http.get<ChatLogByIdDto[]>(`${serverUrl}/${chatId}`, { headers })
       .subscribe(
-        (data: ChatLogByIdDto[]) => {           
+        (data: ChatLogByIdDto[]) => {
           this.chatLogs = data;
           this.isPopupOpen = false;
-          }, 
+          },
           error => {
           console.error('Error fetching chat list:', error);
           }
