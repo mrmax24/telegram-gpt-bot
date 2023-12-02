@@ -1,0 +1,24 @@
+<div class="auth-container">
+  <h2>Sign Up</h2>
+  <form (ngSubmit)="registerUser()" #registerForm="ngForm">
+    <div class="form-group">
+      <label for="login">Login:</label>
+      <input type="login" id="login" name="login" [(ngModel)]="userRegisterDto.login" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" [(ngModel)]="userRegisterDto.email" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" [(ngModel)]="userRegisterDto.password" required>
+    </div>
+    <div class="form-group">
+      <label for="repeat_password">Repeat password:</label>
+      <input type="repeat_password" id="repeat_password" name="repeat_password" [(ngModel)]="userRegisterDto.repeatPassword" required>
+    </div>
+    <button type="submit" [disabled]="!registerForm.valid">Sign Up</button>
+  </form>
+  <div class="error-message" *ngIf="errorMessage">{{ errorMessage}}</div>
+  <p>Don't have an account? <a (click)="goToLoginPage()">Log In here</a></p>
+</div>

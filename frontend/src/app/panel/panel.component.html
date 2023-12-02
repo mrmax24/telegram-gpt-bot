@@ -1,0 +1,38 @@
+<html>
+<body>
+<div class="header-container">
+  <div class="site-name">TGBot Admin panel</div>
+  <div class="user-info" style="text-align: right;">
+    <span>{{ admin?.email }}</span>
+    <button (click)="logout()" class="logout-button">Logout</button>
+  </div>
+</div>
+
+<div class="table-container" style="margin-top: 20px;">
+  <table>
+    <thead>
+    <tr>
+      <th>Chat ID</th>
+      <th>Telegram Username</th>
+      <th>Message</th>
+      <th>User Messages</th>
+      <th>Chat Responses</th>
+      <th>Admin Responses</th>
+      <th>Message Time</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let chat of chatList">
+      <td (click)="onChatIdClick(chat.chatId)" class="chat-id-link">{{ chat.chatId }}</td>
+      <td>{{ chat.tgUsername ? chat.tgUsername : 'no username' }}</td>
+      <td>{{ chat.userMessage }}</td>
+      <td>{{ chat.userMessageCount }}</td>
+      <td>{{ chat.chatResponseCount }}</td>
+      <td>{{ chat.adminResponseCount }}</td>
+      <td>{{ chat.maxUserMessageTime | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

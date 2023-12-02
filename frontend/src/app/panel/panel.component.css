@@ -1,0 +1,82 @@
+div {
+  padding: 20px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #f8f2f2;
+  min-height: 100vh;
+
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+th, td {
+  border: 1px solid #989494;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #aebcd9;
+  text-align: center;
+
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #413e3e;
+}
+
+.site-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
+
+.user-info {
+  text-align: right;
+}
+
+.header-container span {
+  color: white;
+}
+
+.header-container h1 {
+  font-size: 24px;
+  color: #ffffff;
+  text-align: left;
+}
+
+.logout-button {
+  color: #000000;
+  background-color: #f8f2f2;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #4f94d9;
+}
+
+div > span, div > button {
+  margin-right: 10px;
+}
+
+.chat-id-link {
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+}
